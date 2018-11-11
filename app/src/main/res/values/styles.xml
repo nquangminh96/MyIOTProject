@@ -1,0 +1,37 @@
+<resources>
+
+    <!-- Base application theme. -->
+   
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+     <style name="PopUpActivity" parent="Base.Theme.AppCompat.Dialog"/>
+    <style name="MyAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor"> @color/colorTextHint</item>
+    </style>
+    <style name="EditTextTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/colorTextHint</item>
+        <item name="colorControlActivated">@color/colorTextHint</item>
+        <item name="colorControlHighlight">@color/colorTextHint</item>
+    </style>
+    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">#ffffff</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#f1f1f1
+        </item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">#cddcf4
+        </item>
+    </style>
+
+    <style name="MySeekBarTheme" parent="Widget.AppCompat.SeekBar" >
+        <item name="colorAccent">#ffffff</item>
+    </style>
+
+</resources>

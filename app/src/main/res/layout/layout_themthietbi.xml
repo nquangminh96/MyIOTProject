@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/edtTenthietbi"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0dp"
+        android:layout_margin="@dimen/size10dp"
+        android:layout_weight="1"
+        android:hint="@string/kind_ofdevice"
+        android:padding="@dimen/size10dp"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/colorPrimary" />
+
+    <Spinner
+        android:id="@+id/spinLoaithietbi"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0dp"
+        android:layout_margin="@dimen/size10dp"
+        android:layout_weight="1"
+        android:padding="@dimen/size10dp"
+        android:background="@color/colorWhite"
+
+        ></Spinner>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:layout_width="@dimen/size0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/size5dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:padding="@dimen/size5dp"
+            android:text="@string/ok" />
+
+        <Button
+            android:layout_width="@dimen/size0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/size5dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:padding="@dimen/size5dp"
+            android:text="@string/out" />
+    </LinearLayout>
+</LinearLayout>

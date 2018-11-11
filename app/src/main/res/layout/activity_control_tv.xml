@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/backgroundCard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/ToolbarControlTV"
+        app:titleTextColor="@android:color/white"
+        app:titleMarginStart="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimary"/>
+
+    <LinearLayout
+        android:layout_marginTop="25dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/ButtonOnOffControlTV"
+            android:layout_gravity="center"
+            android:padding="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/custom_button_power"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:weightSum="4"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+
+            <ru.katso.livebutton.LiveButton
+                android:id="@+id/LiveButtonNum1ControlTV"
+                android:layout_gravity="end"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="1"
+                android:textSize="45sp"
+                android:textColor="@android:color/white"
+                app:backgroundColor="@color/colorPrimary"
+                app:shadowColor="@color/colorPrimary"
+                app:corners="60dp"/>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ru.katso.livebutton.LiveButton
+                android:id="@+id/LiveButtonNum2ControlTV"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="2"
+                android:textSize="45sp"
+                android:textColor="@android:color/white"
+                app:backgroundColor="@color/colorPrimary"
+                app:shadowColor="@color/colorPrimary"
+                app:corners="60dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ru.katso.livebutton.LiveButton
+                android:id="@+id/LiveButtonNum3ControlTV"
+                android:layout_gravity="start"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="3"
+                android:textSize="45sp"
+                android:textColor="@android:color/white"
+                app:backgroundColor="@color/colorPrimary"
+                app:shadowColor="@color/colorPrimary"
+                app:corners="60dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:weightSum="4"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+
+            <ru.katso.livebutton.LiveButton
+                android:id="@+id/LiveButtonNum4ControlTV"
+                android:layout_gravity="end"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="4"
+                android:textSize="45sp"
+                android:textColor="@android:color/white"
+                app:backgroundColor="@color/colorPrimary"
+                app:shadowColor="@color/colorPrimary"
+                app:corners="60dp"/>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ru.katso.livebutton.LiveButton
+                android:id="@+id/LiveButtonNum5ControlTV"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="5"
+                android:textSize="45sp"
+                android:textColor="@android:color/white"
+                app:backgroundColor="@color/colorPrimary"
+                app:shadowColor="@color/colorPrimary"
+                app:corners="60dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ru.katso.livebutton.LiveButton
+                android:id="@+id/LiveButtonNum6ControlTV"
+                android:layout_gravity="start"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="6"
+                android:textSize="45sp"
+                android:textColor="@android:color/white"
+                app:backgroundColor="@color/colorPrimary"
+                app:shadowColor="@color/colorPrimary"
+                app:corners="60dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:weightSum="4"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+
+            <ru.katso.livebutton.LiveButton
+                android:id="@+id/LiveButtonNum7ControlTV"
+                android:layout_gravity="end"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="7"
+                android:textSize="45sp"
+                android:textColor="@android:color/white"
+                app:backgroundColor="@color/colorPrimary"
+                app:shadowColor="@color/colorPrimary"
+                app:corners="60dp"/>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ru.katso.livebutton.LiveButton
+                android:id="@+id/LiveButtonNum8ControlTV"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="8"
+                android:textSize="45sp"
+                android:textColor="@android:color/white"
+                app:backgroundColor="@color/colorPrimary"
+                app:shadowColor="@color/colorPrimary"
+                app:corners="60dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ru.katso.livebutton.LiveButton
+                android:id="@+id/LiveButtonNum9ControlTV"
+                android:layout_gravity="start"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="9"
+                android:textSize="45sp"
+                android:textColor="@android:color/white"
+                app:backgroundColor="@color/colorPrimary"
+                app:shadowColor="@color/colorPrimary"
+                app:corners="60dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:weightSum="4"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/custom_linear_ch_vol">
+
+                <Button
+                    android:id="@+id/ButtonUpControlTV"
+                    android:padding="0dp"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_up"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+                <TextView
+                    android:padding="0dp"
+                    android:text="CH"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/ButtonDownControlTV"
+                    android:background="@drawable/ic_down"
+                    android:padding="0dp"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="50sp"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ru.katso.livebutton.LiveButton
+                android:id="@+id/LiveButtonNum0ControlTV"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="0"
+                android:textSize="45sp"
+                android:textColor="@android:color/white"
+                app:backgroundColor="@color/colorPrimary"
+                app:shadowColor="@color/colorPrimary"
+                app:corners="60dp"/>
+
+
+
+            <Button
+                android:id="@+id/ButtonMuteControlTV"
+                android:layout_gravity="center"
+                android:layout_marginTop="35dp"
+                android:padding="0dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/custom_button_mute"/>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:layout_gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/custom_linear_ch_vol">
+
+                <Button
+                    android:id="@+id/ButtonIncreaseControlTV"
+                    android:padding="0dp"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:textSize="50sp"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_add"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+                <TextView
+                    android:padding="0dp"
+                    android:text="VOL"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/ButtonDecreaseControlTV"
+                    android:background="@drawable/ic_sub"
+                    android:padding="0dp"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="50sp"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

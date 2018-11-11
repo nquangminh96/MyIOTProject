@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/findwifi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/size20dp"
+        android:layout_marginTop="@dimen/size50dp"
+        android:layout_marginRight="@dimen/size20dp"
+        android:background="@drawable/custom_button"
+        android:text="@string/find_ssid_wifi"
+        android:textColor="@color/colorWhite" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/size20dp"
+        android:layout_marginTop="@dimen/size20dp"
+        android:layout_marginRight="@dimen/size20dp"
+        android:textColorHint="@color/colorTextHint"
+        app:hintTextAppearance="@style/MyAppearance">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/ssid"
+            android:inputType="text"
+            android:maxLength="32"
+            android:maxLines="1"
+            android:textColor="@color/colorTextHint"
+            android:textColorHint="@color/colorTextHint"
+            android:textCursorDrawable="@drawable/cursor"
+            android:theme="@style/EditTextTheme"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/size20dp"
+        android:layout_marginTop="@dimen/size20dp"
+        android:layout_marginRight="@dimen/size20dp"
+        android:textColorHint="@color/colorTextHint"
+        app:hintTextAppearance="@style/MyAppearance">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="text"
+            android:maxLength="32"
+            android:maxLines="1"
+            android:textColor="@color/colorTextHint"
+            android:textColorHint="@color/colorTextHint"
+            android:textCursorDrawable="@drawable/cursor"
+            android:theme="@style/EditTextTheme"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/ConfigEsp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/size20dp"
+        android:layout_marginTop="@dimen/size20dp"
+        android:layout_marginRight="@dimen/size20dp"
+        android:background="@drawable/custom_button"
+        android:text="@string/config"
+        android:textColor="@color/colorWhite" />
+</LinearLayout>
