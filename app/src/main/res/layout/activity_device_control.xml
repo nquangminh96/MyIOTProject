@@ -219,8 +219,7 @@
             android:textColor="@color/colorTextHint"
             android:layout_centerInParent="true"
             android:textSize="@dimen/size8sp"
-
-
+            android:id="@+id/btnTimer"
             />
 
     </RelativeLayout>

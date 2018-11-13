@@ -1,22 +1,30 @@
     package com.example.quangminh.myiotproject.Activity;
 
+    import android.app.DatePickerDialog;
+    import android.app.Dialog;
+    import android.app.TimePickerDialog;
     import android.content.Intent;
     import android.os.Bundle;
     import android.support.annotation.Nullable;
+    import android.support.v4.app.DialogFragment;
     import android.support.v7.app.AppCompatActivity;
     import android.view.View;
     import android.widget.Button;
     import android.widget.CompoundButton;
+    import android.widget.DatePicker;
+    import android.widget.EditText;
     import android.widget.ImageView;
     import android.widget.LinearLayout;
     import android.widget.RadioButton;
     import android.widget.RadioGroup;
     import android.widget.RelativeLayout;
     import android.widget.SeekBar;
+    import android.widget.Spinner;
     import android.widget.Switch;
     import android.widget.TextView;
     import android.widget.Toast;
 
+    import com.example.quangminh.myiotproject.Fragment.TimePicker;
     import com.example.quangminh.myiotproject.R;
     import com.example.quangminh.myiotproject.StringUtils;
     import com.google.firebase.database.DataSnapshot;
@@ -25,7 +33,7 @@
     import com.google.firebase.database.FirebaseDatabase;
     import com.google.firebase.database.ValueEventListener;
 
-    public class DeviceActivity extends AppCompatActivity {
+    public class DeviceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,TimePickerDialog.OnTimeSetListener {
         public static final String KEYINTENT = "roomName";
         public static final String LISTID = "List-ID";
         public static final String LISTUSER = "List-User";
@@ -42,12 +50,14 @@
         Switch swOnOff;
         String deviceName, nameRoom;
         TextView textOn, textOff;
-        Button btnControlTV;
+        Button btnControlTV , btnHengio;
         LinearLayout myLayout;
         RelativeLayout relativeLayout;
         SeekBar seekLevel;
+        TextView txtTime , txtDate;
         boolean canChangeLv = true;
         int progressi;
+
 
 
         @Override
@@ -172,7 +182,32 @@
                     }
                 });
             }
-
+            btnHengio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Dialog dialog = new Dialog(DeviceActivity.this);
+                    dialog.setTitle("Hẹn giờ");
+                    dialog.setCancelable(false);
+                    dialog.setContentView(R.layout.dialog_hengio);
+                    txtTime = dialog.findViewById(R.id.pickerTime);
+                    txtDate = dialog.findViewById(R.id.pickerDate);
+                    txtTime.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            DialogFragment timePicker = new TimePicker();
+                            timePicker.show(getSupportFragmentManager() , "Time");
+                        }
+                    });
+                    txtDate.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            DialogFragment datePicker = new com.example.quangminh.myiotproject.Fragment.DatePicker();
+                            datePicker.show(getSupportFragmentManager(),"Date");
+                        }
+                    });
+                    dialog.show();
+                }
+            });
 
         }
 
@@ -189,6 +224,7 @@
             myLayout = findViewById(R.id.layout);
             relativeLayout = findViewById(R.id.myRelative);
             seekLevel = findViewById(R.id.seekbar);
+            btnHengio = findViewById(R.id.btnTimer);
 
         }
 
@@ -255,5 +291,18 @@
 
                 }
             });
+        }
+
+        @Override
+        public void onTimeSet(android.widget.TimePicker view, int hourOfDay, int minute) {
+            Toast.makeText(this, "Hour" + hourOfDay + "Min" + minute , Toast.LENGTH_SHORT).show();
+            txtTime.setText(hourOfDay + " Giờ " + minute + " Phút");
+        }
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+            Toast.makeText(this, "Year" + year + "Month" + month+ "Day" + dayOfMonth , Toast.LENGTH_SHORT).show();
+            txtDate.setText("Ngày " + dayOfMonth+ " Tháng " + month+ " Năm " + year );
         }
     }
