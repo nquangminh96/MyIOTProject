@@ -1,5 +1,6 @@
 package com.example.quangminh.myiotproject.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -118,6 +119,8 @@ public class DangKyActivity extends AppCompatActivity {
                                     User myuser = new User(user, password, idHome, null);
                                     myData.child(LISTUSER).child(user).setValue(myuser);
                                     Toast.makeText(DangKyActivity.this, getString(R.string.sign_up_successfully), Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(DangKyActivity.this, DangNhapActivity.class);
+                                    startActivity(intent);
 
                                 }
                             }

@@ -1,6 +1,8 @@
 package com.example.quangminh.myiotproject.Fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,26 +13,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.quangminh.myiotproject.Activity.DangKyActivity;
-import com.example.quangminh.myiotproject.Activity.TrangChuActivity;
 import com.example.quangminh.myiotproject.Adapter.GridViewRoomAdapter;
-import com.example.quangminh.myiotproject.Model.User;
 import com.example.quangminh.myiotproject.R;
-import com.example.quangminh.myiotproject.Activity.ThemThietBiActivity;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class HienthiRoomFragment extends android.support.v4.app.Fragment {
@@ -90,8 +82,8 @@ public class HienthiRoomFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        MenuItem itemThemthietbi = menu.add(1, R.id.itemThemthietbi, 1, getString(R.string.add_device));
-        itemThemthietbi.setIcon(R.drawable.ic_add);
+        MenuItem itemThemthietbi = menu.add(1, R.id.itemLogout, 1, getString(R.string.logout));
+        itemThemthietbi.setIcon(R.drawable.logout);
         itemThemthietbi.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
     }
 
@@ -99,9 +91,24 @@ public class HienthiRoomFragment extends android.support.v4.app.Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.itemThemthietbi:
-                Intent intentThemThietbi = new Intent(getActivity(), ThemThietBiActivity.class);
-                startActivityForResult(intentThemThietbi, REQUEST_CODE);
+            case R.id.itemLogout:
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+                builder.setMessage(getString(R.string.want_exit));
+                builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getActivity().finish();
+                    }
+                });
+                builder.setInverseBackgroundForced(true);
+                builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                AlertDialog dialog = builder.create();
+
+                dialog.show();
                 break;
         }
         return super.onOptionsItemSelected(item);

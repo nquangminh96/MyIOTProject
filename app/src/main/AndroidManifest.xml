@@ -18,9 +18,6 @@
         </activity>
         <activity android:name=".Activity.DangKyActivity" />
         <activity android:name=".Activity.TrangChuActivity" />
-        <activity android:name=".Activity.ThemThietBiActivity"
-            android:theme="@style/PopUpActivity"
-            />
         <activity android:name=".Activity.RoomActivity" />
         <activity android:name=".Activity.DeviceActivity" />
         <activity android:name=".Activity.ActivityControlTV" />

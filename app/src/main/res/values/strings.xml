@@ -31,10 +31,10 @@
     <string name="connect_wifi">Vui lòng kết nối Wifi</string>
     <string name="remember_account">Ghi nhớ tài khoản.</string>
     <string name="forgot_password">Quên mật khẩu.</string>
-    <string name="add_device">Thêm thiết bị</string>
+    <string name="logout">Đăng Xuất</string>
     <string name="passLengthError">Mật khẩu ít nhất 5 ký tự</string>
     <string name="userLengthError">Tài khoản ít nhất 5 ký tự</string>
-    <string name="want_exit">Bạn có muốn thoát ứng dụng ?</string>
+    <string name="want_exit">Bạn muốn đăng xuất ?</string>
     <string name="yes">Có</string>
     <string name="no">Không</string>
     <string name="error">Lỗi</string>
