@@ -17,6 +17,7 @@ import android.widget.GridView;
 
 import com.example.quangminh.myiotproject.Adapter.GridViewRoomAdapter;
 import com.example.quangminh.myiotproject.R;
+import com.example.quangminh.myiotproject.allKeyStringsInApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,11 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class HienthiRoomFragment extends android.support.v4.app.Fragment {
-    public static final String LISTID = "List-ID";
-    public static final String LISTUSER = "List-User";
-    public static final String cache = "IDHomeCache";
-    public static final String IDHOME = "IDHome";
-    public static final String keyIntent = "user";
+
     public static int REQUEST_CODE = 111;
     GridView gridViewRoom;
     ArrayList<String> data = new ArrayList<>();
@@ -48,12 +45,12 @@ public class HienthiRoomFragment extends android.support.v4.app.Fragment {
         setHasOptionsMenu(true);
         myData = FirebaseDatabase.getInstance().getReference();
         gridViewRoom = view.findViewById(R.id.grdRoom);
-        sharedPreferences = this.getActivity().getSharedPreferences(cache, Context.MODE_PRIVATE);
-        IDHome = sharedPreferences.getString(IDHOME, "No ID");
+        sharedPreferences = this.getActivity().getSharedPreferences(allKeyStringsInApp.cache, Context.MODE_PRIVATE);
+        IDHome = sharedPreferences.getString(allKeyStringsInApp.IDHOME, "No ID");
         gridViewRoomAdapter = new GridViewRoomAdapter(getContext(), R.layout.item_gridview_room, data);
         gridViewRoom.setAdapter(gridViewRoomAdapter);
 
-        myData.child(LISTID).child(IDHome).addValueEventListener(new ValueEventListener() {
+        myData.child(allKeyStringsInApp.LISTID).child(IDHome).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 dataInServer = new ArrayList<>();

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.quangminh.myiotproject.Adapter.ListViewDeviceAdapter;
 import com.example.quangminh.myiotproject.Model.ThietBi;
 import com.example.quangminh.myiotproject.R;
+import com.example.quangminh.myiotproject.allKeyStringsInApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,15 +28,6 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class RoomActivity extends AppCompatActivity {
-    public static final String KEYINTENT = "roomName";
-    public static final String LISTID = "List-ID";
-    public static final String LISTUSER = "List-User";
-    public static final String DEVICE = "Thiết Bị";
-    public static final String INFO = "Thông Số";
-    public static final String cache = "IDHomeCache";
-    public static final String IDHOME = "IDHome";
-    public static final String TEMP = "Nhiệt Độ";
-    public static final String HUMIDITY = "Độ Ẩm";
     private SharedPreferences sharedPreferences;
     TextView txtNameRoom, txtNhietDo, txtDoAm;
     Button btnTurnOffAll;
@@ -51,12 +43,12 @@ public class RoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
         getView();
-        sharedPreferences = this.getSharedPreferences(cache, Context.MODE_PRIVATE);
-        IDHome = sharedPreferences.getString(IDHOME, "No ID");
+        sharedPreferences = this.getSharedPreferences(allKeyStringsInApp.cache, Context.MODE_PRIVATE);
+        IDHome = sharedPreferences.getString(allKeyStringsInApp.IDHOME, "No ID");
         Intent intent = getIntent();
-        nameRoom = intent.getStringExtra(KEYINTENT);
+        nameRoom = intent.getStringExtra(allKeyStringsInApp.KEYINTENT);
         txtNameRoom.setText(nameRoom);
-        myData.child(LISTID).child(IDHome).child(nameRoom).child(INFO).child(HUMIDITY).addValueEventListener(new ValueEventListener() {
+        myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.INFO).child(allKeyStringsInApp.HUMIDITY).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String humidity = dataSnapshot.getValue().toString();
@@ -69,7 +61,7 @@ public class RoomActivity extends AppCompatActivity {
 
             }
         });
-        myData.child(LISTID).child(IDHome).child(nameRoom).child(INFO).child(TEMP).addValueEventListener(new ValueEventListener() {
+        myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.INFO).child(allKeyStringsInApp.TEMP).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String temp = dataSnapshot.getValue().toString();
@@ -84,7 +76,7 @@ public class RoomActivity extends AppCompatActivity {
         });
         final ListViewDeviceAdapter listViewDeviceAdapter = new ListViewDeviceAdapter(this, R.layout.item_listview_devices_each_room, dataListView);
         listDevice.setAdapter(listViewDeviceAdapter);
-        myData.child(LISTID).child(IDHome).child(nameRoom).child(DEVICE).addValueEventListener(new ValueEventListener() {
+        myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.DEVICE).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 dataInserver = new ArrayList<>();
@@ -112,7 +104,7 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 for (int i = 0 ; i< dataListView.size() ; i++){
-                    myData.child(LISTID).child(IDHome).child(nameRoom).child(DEVICE).child(dataListView.get(i).getName()).setValue(0);
+                    myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.DEVICE).child(dataListView.get(i).getName()).setValue(0);
                 }
                 Toast.makeText(RoomActivity.this , getString(R.string.turned_off_all_devices), Toast.LENGTH_SHORT).show();
             }
@@ -124,7 +116,7 @@ public class RoomActivity extends AppCompatActivity {
                 i.putExtra("nameRoom" , nameRoom);
                 i.putExtra("deviceName", dataListView.get(position).getName());
 
-                i.putExtra(IDHOME , IDHome);
+                i.putExtra(allKeyStringsInApp.IDHOME , IDHome);
                // Toast.makeText(RoomActivity.this,dataListView.get(position).getName() , Toast.LENGTH_SHORT).show();
                 startActivity(i);
             }

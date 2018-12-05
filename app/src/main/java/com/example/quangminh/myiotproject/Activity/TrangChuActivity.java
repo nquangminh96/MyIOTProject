@@ -29,10 +29,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class TrangChuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    public static final String LISTID = "List-ID";
-    public static final String LISTUSER = "List-User";
-    public static final String cache = "IDHomeCache";
-    public static final String IDHOME = "IDHome";
+
     public static final String keyIntent = "user";
 
     TextView tenHienthi;

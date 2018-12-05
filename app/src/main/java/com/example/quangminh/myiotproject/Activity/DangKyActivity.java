@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.quangminh.myiotproject.Model.User;
 import com.example.quangminh.myiotproject.R;
+import com.example.quangminh.myiotproject.allKeyStringsInApp;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,8 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class DangKyActivity extends AppCompatActivity {
-    public static final String LISTID = "List-ID";
-    public static final String LISTUSER = "List-User";
     Button xacNhan;
     TextInputEditText edtuser, edtPass, edtCofirmpass, edtID;
     FirebaseAuth mAuth;
@@ -94,7 +93,7 @@ public class DangKyActivity extends AppCompatActivity {
             mDialogWait.dismiss();
             Toast.makeText(this, getString(R.string.password_do_not_match), Toast.LENGTH_SHORT).show();
         } else {
-            myData.child(LISTID).addListenerForSingleValueEvent(new ValueEventListener() {
+            myData.child(allKeyStringsInApp.LISTID).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot postData : dataSnapshot.getChildren()) {
@@ -108,7 +107,7 @@ public class DangKyActivity extends AppCompatActivity {
                         mDialogWait.dismiss();
                         Toast.makeText(DangKyActivity.this, getString(R.string.id_home_not_exist), Toast.LENGTH_LONG).show();
                     } else {
-                        myData.child(LISTUSER).addListenerForSingleValueEvent(new ValueEventListener() {
+                        myData.child(allKeyStringsInApp.LISTUSER).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.child(user).exists()) {
@@ -117,7 +116,7 @@ public class DangKyActivity extends AppCompatActivity {
                                 } else {
                                     mDialogWait.dismiss();
                                     User myuser = new User(user, password, idHome, null);
-                                    myData.child(LISTUSER).child(user).setValue(myuser);
+                                    myData.child(allKeyStringsInApp.LISTUSER).child(user).setValue(myuser);
                                     Toast.makeText(DangKyActivity.this, getString(R.string.sign_up_successfully), Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(DangKyActivity.this, DangNhapActivity.class);
                                     startActivity(intent);

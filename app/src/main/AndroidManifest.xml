@@ -21,6 +21,7 @@
         <activity android:name=".Activity.RoomActivity" />
         <activity android:name=".Activity.DeviceActivity" />
         <activity android:name=".Activity.ActivityControlTV" />
+        <receiver android:name=".AlarmReceiver"/>
     </application>
 
 </manifest>

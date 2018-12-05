@@ -1,7 +1,9 @@
 package com.example.quangminh.myiotproject.Activity;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,25 +26,21 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.quangminh.myiotproject.AlarmReceiver;
 import com.example.quangminh.myiotproject.Fragment.TimePicker;
 import com.example.quangminh.myiotproject.R;
 import com.example.quangminh.myiotproject.StringUtils;
+import com.example.quangminh.myiotproject.allKeyStringsInApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+
 public class DeviceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
-    public static final String KEYINTENT = "roomName";
-    public static final String LISTID = "List-ID";
-    public static final String LISTUSER = "List-User";
-    public static final String DEVICE = "Thiết Bị";
-    public static final String INFO = "Thông Số";
-    public static final String cache = "IDHomeCache";
-    public static final String IDHOME = "IDHome";
-    public static final String TEMP = "Nhiệt Độ";
-    public static final String HUMIDITY = "Độ Ẩm";
+
     String IDHome;
     TextView txtRoomName, txtNhietDo, txtDeviceName;
     ImageView imgIconDevices;
@@ -63,7 +61,10 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
     int flagTimer = -1;
     String dateDialog = "", timeDialog = "";
     LinearLayout linearLayoutTimer;
-
+    Calendar calendar;
+    int hour ; int min;
+    PendingIntent pendingIntent;
+    AlarmManager alarmManager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,10 +73,15 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
         Intent intent = getIntent();
         nameRoom = intent.getStringExtra("nameRoom");
         deviceName = intent.getStringExtra("deviceName");
-        IDHome = intent.getStringExtra(IDHOME);
+        IDHome = intent.getStringExtra(allKeyStringsInApp.IDHOME);
         txtRoomName.setText(nameRoom);
         txtDeviceName.setText(deviceName);
-
+        calendar = Calendar.getInstance();
+        alarmManager  = (AlarmManager)getSystemService(ALARM_SERVICE);
+        final Intent intent2 = new Intent(DeviceActivity.this,AlarmReceiver.class);
+        intent2.putExtra("nameRoom" ,nameRoom );
+        intent2.putExtra("deviceName" , deviceName);
+        intent2.putExtra("IDHome" , IDHome);
         if (StringUtils.removeAccent(deviceName).toLowerCase().contains("tv")) {
             imgIconDevices.setImageResource(R.drawable.tvwhite_bigicon);
             relativeLayout.setVisibility(View.VISIBLE);
@@ -93,7 +99,7 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
         }
         checkValue();
 
-        myData.child(LISTID).child(IDHome).child(nameRoom).child(INFO).child(TEMP).addValueEventListener(new ValueEventListener() {
+        myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.INFO).child(allKeyStringsInApp.TEMP).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String temp = dataSnapshot.getValue().toString();
@@ -114,13 +120,13 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
                 if (isChecked) {
                     canChangeLv = false;
                     seekLevel.setEnabled(true);
-                    myData.child(LISTID).child(IDHome).child(nameRoom).child(DEVICE).child(deviceName).addListenerForSingleValueEvent(new ValueEventListener() {
+                    myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.DEVICE).child(deviceName).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             int check = Integer.parseInt(dataSnapshot.getValue().toString());
                             if (check == 0) {
                                 seekLevel.setProgress(0);
-                                myData.child(LISTID).child(IDHome).child(nameRoom).child(DEVICE).child(deviceName).setValue(1);
+                                myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.DEVICE).child(deviceName).setValue(1);
                             }
                             if (check > 0) {
                                 seekLevel.setProgress(check);
@@ -137,7 +143,7 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
                 } else {
                     canChangeLv = true;
                     seekLevel.setEnabled(false);
-                    myData.child(LISTID).child(IDHome).child(nameRoom).child(DEVICE).child(deviceName).setValue(0);
+                    myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.DEVICE).child(deviceName).setValue(0);
                     cannotTouch();
                     showLayoutOff();
                 }
@@ -182,7 +188,7 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
-                    myData.child(LISTID).child(IDHome).child(nameRoom).child(DEVICE).child(deviceName).setValue(progressi);
+                    myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.DEVICE).child(deviceName).setValue(progressi);
                 }
             });
         }
@@ -240,14 +246,18 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
                         } else {
                             Toast.makeText(DeviceActivity.this, "Đã hẹn giờ", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
-
+                            calendar.set(Calendar.HOUR_OF_DAY,hour);
+                            calendar.set(Calendar.MINUTE,min);
                             if (flagTimer == 0) {
                                 tittle0 = "Đã hẹn giờ tắt của " + deviceName;
+                                intent2.putExtra("mode" , 0);
                             }
                             if (flagTimer == 1) {
                                 tittle0 = "Đã hẹn giờ bật của " + deviceName;
+                                intent2.putExtra("mode" , 1);
                             }
-
+                            pendingIntent = PendingIntent.getBroadcast(DeviceActivity.this , 0 , intent2,PendingIntent.FLAG_UPDATE_CURRENT);
+                            alarmManager.set(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis(),pendingIntent);
                             tittle1 = timeDialog;
                             tittle2 = dateDialog;
                             txtTimerTittle.setText(tittle0);
@@ -275,6 +285,7 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
                 linearLayoutTimer.setVisibility(View.INVISIBLE);
                 btnHengio.setVisibility(View.VISIBLE);
                 Toast.makeText(DeviceActivity.this,"Đã dừng hẹn giờ" , Toast.LENGTH_SHORT).show();
+                pendingIntent.cancel();
             }
         });
         linearLayoutTimer.setVisibility(View.INVISIBLE);
@@ -344,7 +355,7 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
     }
 
     private void checkValue() {
-        myData.child(LISTID).child(IDHome).child(nameRoom).child(DEVICE).child(deviceName).addValueEventListener(new ValueEventListener() {
+        myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.DEVICE).child(deviceName).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int check = Integer.parseInt(dataSnapshot.getValue().toString());
@@ -373,6 +384,9 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
     @Override
     public void onTimeSet(android.widget.TimePicker view, int hourOfDay, int minute) {
         // Toast.makeText(this, "Hour" + hourOfDay + "Min" + minute, Toast.LENGTH_SHORT).show();
+        hour = hourOfDay;
+        min = minute;
+
         timeDialog = hourOfDay + " Giờ " + minute + " Phút";
         txtTime.setText(timeDialog);
     }

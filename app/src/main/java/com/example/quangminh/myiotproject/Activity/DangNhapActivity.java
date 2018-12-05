@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.quangminh.myiotproject.Model.User;
 import com.example.quangminh.myiotproject.R;
+import com.example.quangminh.myiotproject.allKeyStringsInApp;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -28,10 +29,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class DangNhapActivity extends AppCompatActivity {
-    public static final String LISTID = "List-ID";
-    public static final String LISTUSER = "List-User";
-    public static final String cache = "IDHomeCache";
-    public static final String IDHOME = "IDHome";
     public static final String keyIntent = "user";
     TextInputEditText userName, passWord;
     CheckBox checkBox;
@@ -78,7 +75,7 @@ public class DangNhapActivity extends AppCompatActivity {
         mBuilderWait.setView(viewPleaseWait);
         mDialogWait = mBuilderWait.create();
         myData = FirebaseDatabase.getInstance().getReference();
-        sharedPreferences = getSharedPreferences(cache, Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(allKeyStringsInApp.cache, Context.MODE_PRIVATE);
     }
 
     private void DangNhap() {
@@ -94,7 +91,7 @@ public class DangNhapActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         } else {
             // final ProgressDialog progressDialog = new ProgressDialog(DangNhapActivity.this , R.style.AppTheme_DarkDialog);
-            myData.child(LISTUSER).addListenerForSingleValueEvent(new ValueEventListener() {
+            myData.child(allKeyStringsInApp.LISTUSER).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot postData : dataSnapshot.getChildren()) {
@@ -117,7 +114,7 @@ public class DangNhapActivity extends AppCompatActivity {
                             }
 
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString(IDHOME, user.getIdHome());
+                            editor.putString(allKeyStringsInApp.IDHOME, user.getIdHome());
                             editor.apply();
                             Intent intent = new Intent(DangNhapActivity.this, TrangChuActivity.class);
                             intent.putExtra(keyIntent, username);
