@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -48,7 +49,7 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
     Switch swOnOff;
     String deviceName, nameRoom;
     TextView textOn, textOff;
-    Button btnControlTV, btnHengio , btnStopHengio;
+    Button btnControlTV, btnHengio, btnStopHengio;
     LinearLayout myLayout;
     RelativeLayout relativeLayout;
     SeekBar seekLevel;
@@ -56,15 +57,17 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
     boolean canChangeLv = true;
     int progressi;
     Button btnDialogOk, btnDialogOut;
-    TextView txtTittle, txtTimerTittle,txtTimerTittle1, txtTimerTittle2;
+    TextView txtTittle, txtTimerTittle, txtTimerTittle1, txtTimerTittle2;
     RadioGroup rgdb;
     int flagTimer = -1;
     String dateDialog = "", timeDialog = "";
     LinearLayout linearLayoutTimer;
     Calendar calendar;
-    int hour ; int min;
+    int hour;
+    int min;
     PendingIntent pendingIntent;
     AlarmManager alarmManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,11 +80,8 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
         txtRoomName.setText(nameRoom);
         txtDeviceName.setText(deviceName);
         calendar = Calendar.getInstance();
-        alarmManager  = (AlarmManager)getSystemService(ALARM_SERVICE);
-        final Intent intent2 = new Intent(DeviceActivity.this,AlarmReceiver.class);
-        intent2.putExtra("nameRoom" ,nameRoom );
-        intent2.putExtra("deviceName" , deviceName);
-        intent2.putExtra("IDHome" , IDHome);
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
         if (StringUtils.removeAccent(deviceName).toLowerCase().contains("tv")) {
             imgIconDevices.setImageResource(R.drawable.tvwhite_bigicon);
             relativeLayout.setVisibility(View.VISIBLE);
@@ -200,7 +200,7 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
                 dialog.setCancelable(false);
                 dialog.setContentView(R.layout.dialog_hengio);
                 txtTime = dialog.findViewById(R.id.pickerTime);
-                txtDate = dialog.findViewById(R.id.pickerDate);
+                //txtDate = dialog.findViewById(R.id.pickerDate);
                 btnDialogOk = dialog.findViewById(R.id.btnHenGio);
                 btnDialogOut = dialog.findViewById(R.id.btnThoat);
                 txtTittle = dialog.findViewById(R.id.txtTittlee);
@@ -227,13 +227,13 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
                         timePicker.show(getSupportFragmentManager(), "Time");
                     }
                 });
-                txtDate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DialogFragment datePicker = new com.example.quangminh.myiotproject.Fragment.DatePicker();
-                        datePicker.show(getSupportFragmentManager(), "Date");
-                    }
-                });
+//                txtDate.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        DialogFragment datePicker = new com.example.quangminh.myiotproject.Fragment.DatePicker();
+//                        datePicker.show(getSupportFragmentManager(), "Date");
+//                    }
+//                });
                 btnDialogOk.setOnClickListener(new View.OnClickListener() {
                     String tittle0, tittle1, tittle2;
 
@@ -246,25 +246,32 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
                         } else {
                             Toast.makeText(DeviceActivity.this, "Đã hẹn giờ", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
-                            calendar.set(Calendar.HOUR_OF_DAY,hour);
-                            calendar.set(Calendar.MINUTE,min);
+                            calendar.set(Calendar.HOUR_OF_DAY, hour);
+                            calendar.set(Calendar.MINUTE, min);
+                            final Intent intent2 = new Intent(DeviceActivity.this, AlarmReceiver.class);
+                            intent2.putExtra("nameRoom", nameRoom);
+                            intent2.putExtra("deviceName", deviceName);
+                            intent2.putExtra("IDHome", IDHome);
                             if (flagTimer == 0) {
-                                tittle0 = "Đã hẹn giờ tắt của " + deviceName;
-                                intent2.putExtra("mode" , 0);
+                                myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.TIMER).child(deviceName).setValue("Đã hẹn giờ tắt của " + deviceName);
+                                intent2.putExtra("mode", 0);
                             }
                             if (flagTimer == 1) {
-                                tittle0 = "Đã hẹn giờ bật của " + deviceName;
-                                intent2.putExtra("mode" , 1);
+                                myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.TIMER).child(deviceName).setValue("Đã hẹn giờ bật của " + deviceName);
+                                intent2.putExtra("mode", 1);
                             }
-                            pendingIntent = PendingIntent.getBroadcast(DeviceActivity.this , 0 , intent2,PendingIntent.FLAG_UPDATE_CURRENT);
-                            alarmManager.set(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis(),pendingIntent);
+
+                            int requestCodeForAlarm = 0;
+                            String request = nameRoom + deviceName + IDHome + flagTimer;
+                            for (int i = 0; i < request.length(); i++) {
+                                requestCodeForAlarm = requestCodeForAlarm + request.charAt(i);
+                            }
+                            pendingIntent = PendingIntent.getBroadcast(DeviceActivity.this, requestCodeForAlarm, intent2, PendingIntent.FLAG_ONE_SHOT);
+                            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                            Log.e("myFuckinkey", requestCodeForAlarm + "");
                             tittle1 = timeDialog;
                             tittle2 = dateDialog;
-                            txtTimerTittle.setText(tittle0);
-                            txtTimerTittle1.setText(tittle1);
-                            txtTimerTittle2.setText(tittle2);
-                            linearLayoutTimer.setVisibility(View.VISIBLE);
-                            btnHengio.setVisibility(View.INVISIBLE);
+
                             flagTimer = -1;
 
                         }
@@ -284,8 +291,9 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
             public void onClick(View v) {
                 linearLayoutTimer.setVisibility(View.INVISIBLE);
                 btnHengio.setVisibility(View.VISIBLE);
-                Toast.makeText(DeviceActivity.this,"Đã dừng hẹn giờ" , Toast.LENGTH_SHORT).show();
-                pendingIntent.cancel();
+                Toast.makeText(DeviceActivity.this, "Đã dừng hẹn giờ", Toast.LENGTH_SHORT).show();
+               if (pendingIntent!= null) pendingIntent.cancel();
+                myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.TIMER).child(deviceName).setValue(0);
             }
         });
         linearLayoutTimer.setVisibility(View.INVISIBLE);
@@ -379,6 +387,27 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
 
             }
         });
+        myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.TIMER).child(deviceName).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String timerInSever = dataSnapshot.getValue().toString();
+                if (!timerInSever.equals("0")) {
+                    txtTimerTittle1.setText(timerInSever);
+                    linearLayoutTimer.setVisibility(View.VISIBLE);
+                    btnHengio.setVisibility(View.INVISIBLE);
+                }
+                if (timerInSever.equals("0")){
+                    linearLayoutTimer.setVisibility(View.INVISIBLE);
+                    btnHengio.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -394,7 +423,7 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         // Toast.makeText(this, "Year" + year + "Month" + month + "Day" + dayOfMonth, Toast.LENGTH_SHORT).show();
-        dateDialog = "Ngày " + dayOfMonth + " Tháng " + month + " Năm " + year;
-        txtDate.setText(dateDialog);
+       // dateDialog = "Ngày " + dayOfMonth + " Tháng " + month + " Năm " + year;
+       // txtDate.setText(dateDialog);
     }
 }

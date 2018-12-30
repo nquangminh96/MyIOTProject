@@ -9,19 +9,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.DangNhapActivity">
+        <activity
+            android:name=".Activity.DangNhapActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.DangKyActivity" />
-        <activity android:name=".Activity.TrangChuActivity" />
-        <activity android:name=".Activity.RoomActivity" />
-        <activity android:name=".Activity.DeviceActivity" />
-        <activity android:name=".Activity.ActivityControlTV" />
-        <receiver android:name=".AlarmReceiver"/>
+        <activity
+            android:name=".Activity.DangKyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.TrangChuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.RoomActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.DeviceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ActivityControlTV"
+            android:screenOrientation="portrait" />
+
+        <receiver android:name=".AlarmReceiver" />
     </application>
 
 </manifest>

@@ -23,15 +23,22 @@ import android.widget.Toast;
 
 import com.example.quangminh.myiotproject.Fragment.ConfigEspFragment;
 import com.example.quangminh.myiotproject.Fragment.HienthiRoomFragment;
+import com.example.quangminh.myiotproject.Model.User;
 import com.example.quangminh.myiotproject.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import com.example.quangminh.myiotproject.allKeyStringsInApp;
+import com.google.firebase.database.ValueEventListener;
 
 public class TrangChuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String keyIntent = "user";
-
+    DatabaseReference myData = FirebaseDatabase.getInstance().getReference();
     TextView tenHienthi;
     Intent intent;
     DrawerLayout mydrawerLayout;
@@ -39,7 +46,8 @@ public class TrangChuActivity extends AppCompatActivity implements NavigationVie
     Toolbar mytoolbar;
     android.support.v4.app.FragmentManager fragmentManager;
     Fragment fragment = null;
-
+    String myEmail = "bkfet.iot@gmail.com";
+    String IDHOME;
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +74,19 @@ public class TrangChuActivity extends AppCompatActivity implements NavigationVie
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
         intent = getIntent();
-        String ten = intent.getStringExtra(keyIntent);
+        final String ten = intent.getStringExtra(keyIntent);
+        myData.child(allKeyStringsInApp.LISTUSER).child(ten).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                IDHOME = user.getIdHome();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         tenHienthi.setText(ten);
         fragmentManager = getSupportFragmentManager();
 
@@ -107,6 +127,16 @@ public class TrangChuActivity extends AppCompatActivity implements NavigationVie
                 getSupportActionBar().setTitle(getString(R.string.config));
                 break;
             case R.id.itemFeedBack:
+                String[] recipient = new String[]{myEmail};
+                String subject   = "Feedback from " + IDHOME;
+                String message = "";
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_EMAIL , recipient);
+                intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                intent.putExtra(Intent.EXTRA_TEXT  ,message);
+                intent.setType("message/rfc822");
+                startActivity(Intent.createChooser(intent, "Chọn trình email"));
+                break;
 
         }
         return false;

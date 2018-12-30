@@ -10,5 +10,6 @@ public class allKeyStringsInApp {
     public static final String IDHOME = "IDHome";
     public static final String TEMP = "Nhiệt Độ";
     public static final String HUMIDITY = "Độ Ẩm";
+    public static final String TIMER = "Timer";
 
 }
