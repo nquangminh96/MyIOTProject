@@ -54,5 +54,9 @@
     <string name="OFF">OFF</string>
     <string name="turn_on_tv_first">Vui lòng bật TV trước khi điều khiển</string>
     <string name="timer">Hẹn giờ</string>
-
+    <string name="turnOn_Internet_to_continue">Không có kết nối, hãy bật Wifi hoặc data để tiếp tục</string>
+    <string name="noInternet">Mất kết nối</string>
+    <string name="haveInternet">Đã kết nối</string>
+    <string name="feedbackFrom">Phản hồi từ </string>
+    <string name="chooseEmailClient">Chọn trình Email</string>
 </resources>

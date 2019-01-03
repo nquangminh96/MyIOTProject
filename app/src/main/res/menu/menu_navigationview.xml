@@ -22,7 +22,9 @@
         <item
 
             android:icon="@drawable/icon_setting"
-            android:title="@string/setting" />
+            android:title="@string/setting"
+            android:id="@+id/itemSetting"
+            />
         <item
 
             android:icon="@drawable/icon_feedback"

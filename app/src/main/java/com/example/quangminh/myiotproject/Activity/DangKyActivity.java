@@ -13,7 +13,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
+import com.example.quangminh.myiotproject.ConnectivityReceiver;
 import com.example.quangminh.myiotproject.Model.User;
+import com.example.quangminh.myiotproject.MyApplication;
 import com.example.quangminh.myiotproject.R;
 import com.example.quangminh.myiotproject.allKeyStringsInApp;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,7 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class DangKyActivity extends AppCompatActivity {
+public class DangKyActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
     Button xacNhan;
     TextInputEditText edtuser, edtPass, edtCofirmpass, edtID;
     FirebaseAuth mAuth;
@@ -37,18 +39,23 @@ public class DangKyActivity extends AppCompatActivity {
     AlertDialog mDialogWait;
     String idHomeinFirebase;
 
+
+    AlertDialog dialogInternet;
+    AlertDialog.Builder builderDialogInternet;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dangky);
         getView();
-
         xacNhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DangKy();
             }
         });
+
+        createDialogInternet();
+
     }
 
     private void getView() {
@@ -66,7 +73,15 @@ public class DangKyActivity extends AppCompatActivity {
         mDialogWait = mBuilderWait.create();
     }
 
-
+    private void createDialogInternet(){
+        builderDialogInternet = new AlertDialog.Builder(DangKyActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View viewInternetWarning = inflater.inflate(R.layout.dialog_internet_warning, null);
+        builderDialogInternet.setView(viewInternetWarning);
+        dialogInternet = builderDialogInternet.create();
+        dialogInternet.setCancelable(false);
+        checkConnection();
+    }
     private void DangKy() {
         check = false;
         user = edtuser.getText().toString();
@@ -139,6 +154,36 @@ public class DangKyActivity extends AppCompatActivity {
                     Toast.makeText(DangKyActivity.this, getString(R.string.connect_wifi), Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+    }
+
+    private void checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (!isConnected) {
+            dialogInternet.show();
+            Toast.makeText(DangKyActivity.this, getString(R.string.noInternet) , Toast.LENGTH_SHORT).show();
+        }
+        else{
+            dialogInternet.cancel();
+            //Toast.makeText(DangKyActivity.this, getString(R.string.haveInternet)  , Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected) {
+            dialogInternet.show();
+            Toast.makeText(DangKyActivity.this,  getString(R.string.noInternet) , Toast.LENGTH_SHORT).show();
+        }
+        else{
+            dialogInternet.cancel();
+            Toast.makeText(DangKyActivity.this, getString(R.string.haveInternet) , Toast.LENGTH_SHORT).show();
         }
     }
 }

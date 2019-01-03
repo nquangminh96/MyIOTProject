@@ -9,8 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -28,7 +30,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quangminh.myiotproject.AlarmReceiver;
+import com.example.quangminh.myiotproject.ConnectivityReceiver;
 import com.example.quangminh.myiotproject.Fragment.TimePicker;
+import com.example.quangminh.myiotproject.MyApplication;
 import com.example.quangminh.myiotproject.R;
 import com.example.quangminh.myiotproject.StringUtils;
 import com.example.quangminh.myiotproject.allKeyStringsInApp;
@@ -40,7 +44,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
-public class DeviceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class DeviceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener , ConnectivityReceiver.ConnectivityReceiverListener {
 
     String IDHome;
     TextView txtRoomName, txtNhietDo, txtDeviceName;
@@ -68,6 +72,9 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
     PendingIntent pendingIntent;
     AlarmManager alarmManager;
 
+    AlertDialog dialogInternet;
+    AlertDialog.Builder builderDialogInternet;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +87,7 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
         txtRoomName.setText(nameRoom);
         txtDeviceName.setText(deviceName);
         calendar = Calendar.getInstance();
+        createDialogInternet();
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         if (StringUtils.removeAccent(deviceName).toLowerCase().contains("tv")) {
@@ -300,7 +308,26 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
         btnHengio.setVisibility(View.VISIBLE);
 
     }
-
+    private void createDialogInternet(){
+        builderDialogInternet = new AlertDialog.Builder(DeviceActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View viewInternetWarning = inflater.inflate(R.layout.dialog_internet_warning, null);
+        builderDialogInternet.setView(viewInternetWarning);
+        dialogInternet = builderDialogInternet.create();
+        dialogInternet.setCancelable(false);
+        checkConnection();
+    }
+    private void checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (!isConnected) {
+            dialogInternet.show();
+            Toast.makeText(DeviceActivity.this, getString(R.string.noInternet) , Toast.LENGTH_SHORT).show();
+        }
+        else{
+            dialogInternet.cancel();
+            //Toast.makeText(DangNhapActivity.this, getString(R.string.haveInternet)  , Toast.LENGTH_SHORT).show();
+        }
+    }
     private void getView() {
         txtRoomName = findViewById(R.id.txtNameRoomOfDevice);
         txtNhietDo = findViewById(R.id.txtNhietDo);
@@ -411,6 +438,12 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+    @Override
     public void onTimeSet(android.widget.TimePicker view, int hourOfDay, int minute) {
         // Toast.makeText(this, "Hour" + hourOfDay + "Min" + minute, Toast.LENGTH_SHORT).show();
         hour = hourOfDay;
@@ -425,5 +458,17 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
         // Toast.makeText(this, "Year" + year + "Month" + month + "Day" + dayOfMonth, Toast.LENGTH_SHORT).show();
        // dateDialog = "Ngày " + dayOfMonth + " Tháng " + month + " Năm " + year;
        // txtDate.setText(dateDialog);
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected) {
+            dialogInternet.show();
+            Toast.makeText(DeviceActivity.this,  getString(R.string.noInternet) , Toast.LENGTH_SHORT).show();
+        }
+        else{
+            dialogInternet.cancel();
+            Toast.makeText(DeviceActivity.this, getString(R.string.haveInternet) , Toast.LENGTH_SHORT).show();
+        }
     }
 }

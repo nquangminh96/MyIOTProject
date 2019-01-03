@@ -12,7 +12,7 @@
         android:layout_height="@dimen/size0dp"
         android:layout_weight="5"
         app:cardBackgroundColor="@color/backgroundCard"
-        android:layout_margin="@dimen/size10dp"
+        android:layout_marginBottom="@dimen/size10dp"
         >
 
         <LinearLayout
@@ -147,9 +147,7 @@
         android:layout_height="@dimen/size0dp"
         android:layout_weight="9"
         app:cardBackgroundColor="@color/backgroundCard"
-        android:layout_marginBottom="@dimen/size10dp"
-        android:layout_marginLeft="@dimen/size10dp"
-        android:layout_marginRight="@dimen/size10dp"
+
         >
 
         <ListView

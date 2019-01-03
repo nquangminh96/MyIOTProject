@@ -1,5 +1,6 @@
 package com.example.quangminh.myiotproject.Activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,7 +16,9 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.quangminh.myiotproject.ConnectivityReceiver;
 import com.example.quangminh.myiotproject.Model.User;
+import com.example.quangminh.myiotproject.MyApplication;
 import com.example.quangminh.myiotproject.R;
 import com.example.quangminh.myiotproject.allKeyStringsInApp;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,7 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class DangNhapActivity extends AppCompatActivity {
+public class DangNhapActivity extends AppCompatActivity  implements ConnectivityReceiver.ConnectivityReceiverListener {
     public static final String keyIntent = "user";
     TextInputEditText userName, passWord;
     CheckBox checkBox;
@@ -41,11 +44,15 @@ public class DangNhapActivity extends AppCompatActivity {
     boolean check, checkLogin;
     private SharedPreferences sharedPreferences;
 
+    AlertDialog dialogInternet;
+    AlertDialog.Builder builderDialogInternet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dangnhap);
         getView();
+
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +66,32 @@ public class DangNhapActivity extends AppCompatActivity {
                 DangNhap();
             }
         });
+
+        createDialogInternet();
+
+
+    }
+    private void checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (!isConnected) {
+            dialogInternet.show();
+            Toast.makeText(DangNhapActivity.this, getString(R.string.noInternet) , Toast.LENGTH_SHORT).show();
+        }
+        else{
+             dialogInternet.cancel();
+            //Toast.makeText(DangNhapActivity.this, getString(R.string.haveInternet)  , Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void createDialogInternet(){
+        builderDialogInternet = new AlertDialog.Builder(DangNhapActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View viewInternetWarning = inflater.inflate(R.layout.dialog_internet_warning, null);
+        builderDialogInternet.setView(viewInternetWarning);
+        dialogInternet = builderDialogInternet.create();
+        dialogInternet.setCancelable(false);
+        checkConnection();
     }
 
     private void getView() {
@@ -141,6 +174,24 @@ public class DangNhapActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected) {
+            dialogInternet.show();
+            Toast.makeText(DangNhapActivity.this,  getString(R.string.noInternet) , Toast.LENGTH_SHORT).show();
+        }
+        else{
+            dialogInternet.cancel();
+            Toast.makeText(DangNhapActivity.this, getString(R.string.haveInternet) , Toast.LENGTH_SHORT).show();
+        }
     }
 
 
