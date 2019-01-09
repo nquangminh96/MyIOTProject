@@ -16,9 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quangminh.myiotproject.Adapter.ListViewDeviceAdapter;
-import com.example.quangminh.myiotproject.ConnectivityReceiver;
+import com.example.quangminh.myiotproject.CheckConnect.ConnectivityReceiver;
 import com.example.quangminh.myiotproject.Model.ThietBi;
-import com.example.quangminh.myiotproject.MyApplication;
+import com.example.quangminh.myiotproject.CheckConnect.MyApplication;
 import com.example.quangminh.myiotproject.R;
 import com.example.quangminh.myiotproject.allKeyStringsInApp;
 import com.google.firebase.database.DataSnapshot;
@@ -26,8 +26,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

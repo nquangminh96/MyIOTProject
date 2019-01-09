@@ -1,10 +1,8 @@
 package com.example.quangminh.myiotproject.Activity;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,22 +14,18 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.quangminh.myiotproject.ConnectivityReceiver;
+import com.example.quangminh.myiotproject.CheckConnect.ConnectivityReceiver;
 import com.example.quangminh.myiotproject.Model.User;
-import com.example.quangminh.myiotproject.MyApplication;
+import com.example.quangminh.myiotproject.CheckConnect.MyApplication;
 import com.example.quangminh.myiotproject.R;
 import com.example.quangminh.myiotproject.allKeyStringsInApp;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class DangNhapActivity extends AppCompatActivity  implements ConnectivityReceiver.ConnectivityReceiverListener {
+public class DangNhapActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
     public static final String keyIntent = "user";
     TextInputEditText userName, passWord;
     CheckBox checkBox;
@@ -71,20 +65,20 @@ public class DangNhapActivity extends AppCompatActivity  implements Connectivity
 
 
     }
+
     private void checkConnection() {
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (!isConnected) {
             dialogInternet.show();
-            Toast.makeText(DangNhapActivity.this, getString(R.string.noInternet) , Toast.LENGTH_SHORT).show();
-        }
-        else{
-             dialogInternet.cancel();
+            Toast.makeText(DangNhapActivity.this, getString(R.string.noInternet), Toast.LENGTH_SHORT).show();
+        } else {
+            dialogInternet.cancel();
             //Toast.makeText(DangNhapActivity.this, getString(R.string.haveInternet)  , Toast.LENGTH_SHORT).show();
         }
     }
 
 
-    private void createDialogInternet(){
+    private void createDialogInternet() {
         builderDialogInternet = new AlertDialog.Builder(DangNhapActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         View viewInternetWarning = inflater.inflate(R.layout.dialog_internet_warning, null);
@@ -138,26 +132,30 @@ public class DangNhapActivity extends AppCompatActivity  implements Connectivity
                         User user = dataSnapshot.child(username).getValue(User.class);
                         assert user != null;
                         if (user.getPassword().equals(password)) {
-                            mDialogWait.dismiss();
-                            Toast.makeText(DangNhapActivity.this, getString(R.string.sign_in_successfully), Toast.LENGTH_SHORT).show();
-                            if (check == false) {
-                                passWord.setText("");
-                                userName.setText("");
-                                checkBox.setChecked(false);
-                            }
+                            if (user.getAccessmode().equals("client")) {
+                                mDialogWait.dismiss();
+                                Toast.makeText(DangNhapActivity.this, getString(R.string.sign_in_successfully), Toast.LENGTH_SHORT).show();
+                                if (check == false) {
+                                    passWord.setText("");
+                                    userName.setText("");
+                                    checkBox.setChecked(false);
+                                }
 
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString(allKeyStringsInApp.IDHOME, user.getIdHome());
-                            editor.apply();
-                            Intent intent = new Intent(DangNhapActivity.this, TrangChuActivity.class);
-                            intent.putExtra(keyIntent, username);
-                            startActivity(intent);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString(allKeyStringsInApp.IDHOME, user.getIdHome());
+                                editor.apply();
+                                Intent intent = new Intent(DangNhapActivity.this, TrangChuActivity.class);
+                                intent.putExtra(keyIntent, username);
+                                startActivity(intent);
+                            } else {
+                                mDialogWait.dismiss();
+                                Toast.makeText(DangNhapActivity.this, "Hãy đăng nhập với quyền client", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             mDialogWait.dismiss();
                             Toast.makeText(DangNhapActivity.this, getString(R.string.wrong_password), Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else {
+                    } else {
                         mDialogWait.dismiss();
                         Toast.makeText(DangNhapActivity.this, getString(R.string.account_not_exist), Toast.LENGTH_SHORT).show();
                     }
@@ -186,11 +184,10 @@ public class DangNhapActivity extends AppCompatActivity  implements Connectivity
     public void onNetworkConnectionChanged(boolean isConnected) {
         if (!isConnected) {
             dialogInternet.show();
-            Toast.makeText(DangNhapActivity.this,  getString(R.string.noInternet) , Toast.LENGTH_SHORT).show();
-        }
-        else{
+            Toast.makeText(DangNhapActivity.this, getString(R.string.noInternet), Toast.LENGTH_SHORT).show();
+        } else {
             dialogInternet.cancel();
-            Toast.makeText(DangNhapActivity.this, getString(R.string.haveInternet) , Toast.LENGTH_SHORT).show();
+            Toast.makeText(DangNhapActivity.this, getString(R.string.haveInternet), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.quangminh.myiotproject;
+package com.example.quangminh.myiotproject.CheckConnect;
 
 import android.app.Application;
 

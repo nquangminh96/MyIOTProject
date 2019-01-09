@@ -1,6 +1,7 @@
 package com.example.quangminh.myiotproject.Model;
 
 public class User {
+    private String accessmode;
     private String username;
     private String password;
     private String idHome;
@@ -37,12 +38,22 @@ public class User {
         this.name = name;
     }
 
-    public User(String username,String password, String idHome,  String name) {
+    public String getAccessmode() {
+        return accessmode;
+    }
+
+    public void setAccessmode(String accessmode) {
+        this.accessmode = accessmode;
+    }
+
+    public User(String username, String password, String idHome, String name , String accessmode) {
 
         this.password = password;
         this.idHome = idHome;
         this.username = username;
         this.name = name;
+        this.accessmode = accessmode;
+
     }
 
     public User() {

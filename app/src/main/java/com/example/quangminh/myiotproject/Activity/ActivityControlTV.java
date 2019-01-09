@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.quangminh.myiotproject.ConnectivityReceiver;
-import com.example.quangminh.myiotproject.MyApplication;
+import com.example.quangminh.myiotproject.CheckConnect.ConnectivityReceiver;
+import com.example.quangminh.myiotproject.CheckConnect.MyApplication;
 import com.example.quangminh.myiotproject.R;
 
 public class ActivityControlTV extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{

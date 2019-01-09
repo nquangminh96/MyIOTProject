@@ -22,12 +22,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.quangminh.myiotproject.ConnectivityReceiver;
+import com.example.quangminh.myiotproject.CheckConnect.ConnectivityReceiver;
 import com.example.quangminh.myiotproject.Fragment.ConfigEspFragment;
 import com.example.quangminh.myiotproject.Fragment.HienthiRoomFragment;
 import com.example.quangminh.myiotproject.Fragment.SettingFragment;
 import com.example.quangminh.myiotproject.Model.User;
-import com.example.quangminh.myiotproject.MyApplication;
+import com.example.quangminh.myiotproject.CheckConnect.MyApplication;
 import com.example.quangminh.myiotproject.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
