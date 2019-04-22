@@ -83,6 +83,7 @@ public class GridViewRoomAdapter extends BaseAdapter {
     public class ViewHolder {
         ImageView iconRoom;
         TextView txtRoomName;
+        //ahihiii
     }
 
 }

@@ -3,8 +3,11 @@ package com.example.quangminh.myiotproject.Activity;
 import android.annotation.SuppressLint;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
@@ -177,6 +180,10 @@ public class TrangChuActivity extends AppCompatActivity implements NavigationVie
                 mydrawerLayout.closeDrawers();
                 getSupportActionBar().setTitle(getString(R.string.setting));
                 break;
+            case R.id.itemFacebook:
+                Intent intentfb = openFaceBook(TrangChuActivity.this);
+                startActivity(intentfb);
+                break;
         }
         return false;
     }
@@ -245,6 +252,27 @@ public class TrangChuActivity extends AppCompatActivity implements NavigationVie
             startActivityForResult(intent, 10);
         } else {
             Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+//    private void openFaceBook(){
+//        try{
+//            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/PTNDienTuVienThongDaiHocBKHN/"));
+//            startActivity(intent);
+//        }
+//        catch (ActivityNotFoundException e){
+//            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/PTNDienTuVienThongDaiHocBKHN/"));
+//            startActivity(intent);
+//        }
+//
+//    }
+    private static Intent openFaceBook(Context context){
+        try{
+            context.getPackageManager().getPackageInfo("com.facebook.katana" , 0);
+            return new Intent(Intent.ACTION_VIEW , Uri.parse("https://www.facebook.com/PTNDienTuVienThongDaiHocBKHN/"));
+        }
+        catch (Exception e){
+            return new Intent(Intent.ACTION_VIEW , Uri.parse("https://www.facebook.com/PTNDienTuVienThongDaiHocBKHN/"));
         }
 
     }

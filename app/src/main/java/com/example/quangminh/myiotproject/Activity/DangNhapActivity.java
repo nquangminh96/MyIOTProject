@@ -47,13 +47,15 @@ public class DangNhapActivity extends AppCompatActivity implements ConnectivityR
         setContentView(R.layout.activity_dangnhap);
         getView();
 
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent dangKy = new Intent(DangNhapActivity.this, DangKyActivity.class);
-                startActivity(dangKy);
-            }
-        });
+//        signUp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent dangKy = new Intent(DangNhapActivity.this, DangKyActivity.class);
+//                startActivity(dangKy);
+//            }
+//        });
+
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +94,7 @@ public class DangNhapActivity extends AppCompatActivity implements ConnectivityR
         userName = findViewById(R.id.edtUserName);
         passWord = findViewById(R.id.edtPassword);
         login = findViewById(R.id.btnLogin);
-        signUp = findViewById(R.id.txtSignUpAccount);
+       // signUp = findViewById(R.id.txtSignUpAccount);
         checkBox = findViewById(R.id.checkRemember);
         forgotPass = findViewById(R.id.txtForgotPass);
 
@@ -132,7 +134,7 @@ public class DangNhapActivity extends AppCompatActivity implements ConnectivityR
                         User user = dataSnapshot.child(username).getValue(User.class);
                         assert user != null;
                         if (user.getPassword().equals(password)) {
-                            if (user.getAccessmode().equals("client")) {
+                          //  if (user.getAccessmode().equals("client")) {
                                 mDialogWait.dismiss();
                                 Toast.makeText(DangNhapActivity.this, getString(R.string.sign_in_successfully), Toast.LENGTH_SHORT).show();
                                 if (check == false) {
@@ -147,10 +149,10 @@ public class DangNhapActivity extends AppCompatActivity implements ConnectivityR
                                 Intent intent = new Intent(DangNhapActivity.this, TrangChuActivity.class);
                                 intent.putExtra(keyIntent, username);
                                 startActivity(intent);
-                            } else {
-                                mDialogWait.dismiss();
-                                Toast.makeText(DangNhapActivity.this, "Hãy đăng nhập với quyền client", Toast.LENGTH_SHORT).show();
-                            }
+//                            } else {
+//                                mDialogWait.dismiss();
+//                                Toast.makeText(DangNhapActivity.this, "Hãy đăng nhập với quyền client", Toast.LENGTH_SHORT).show();
+//                            }
                         } else {
                             mDialogWait.dismiss();
                             Toast.makeText(DangNhapActivity.this, getString(R.string.wrong_password), Toast.LENGTH_SHORT).show();

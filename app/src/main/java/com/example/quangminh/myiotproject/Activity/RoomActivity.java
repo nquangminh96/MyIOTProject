@@ -54,7 +54,7 @@ public class RoomActivity extends AppCompatActivity implements ConnectivityRecei
         nameRoom = intent.getStringExtra(allKeyStringsInApp.KEYINTENT);
         txtNameRoom.setText(nameRoom);
         createDialogInternet();
-        myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.INFO).child(allKeyStringsInApp.HUMIDITY).addValueEventListener(new ValueEventListener() {
+        myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.INFO).child(allKeyStringsInApp.HUMIDITY).child(allKeyStringsInApp.NOWHUMIDITY).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String humidity = dataSnapshot.getValue().toString();
@@ -67,7 +67,7 @@ public class RoomActivity extends AppCompatActivity implements ConnectivityRecei
 
             }
         });
-        myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.INFO).child(allKeyStringsInApp.TEMP).addValueEventListener(new ValueEventListener() {
+        myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.INFO).child(allKeyStringsInApp.TEMP).child(allKeyStringsInApp.NOWTEMP).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String temp = dataSnapshot.getValue().toString();

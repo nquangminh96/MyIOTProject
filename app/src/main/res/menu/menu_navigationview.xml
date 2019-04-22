@@ -9,15 +9,12 @@
             android:icon="@drawable/ic_home"
             android:title="@string/Main"
             android:id="@+id/itemTrangchu"
-
             />
         <item
             
             android:icon="@drawable/icon_backup"
             android:title="@string/config"
             android:id="@+id/itemConfig"
-
-
             />
         <item
 
@@ -26,13 +23,16 @@
             android:id="@+id/itemSetting"
             />
         <item
-
             android:icon="@drawable/icon_feedback"
             android:title="@string/feedback"
             android:id="@+id/itemFeedBack"
             />
         <item
-
+            android:icon="@drawable/iconfacebook"
+            android:title="Facebook"
+            android:id="@+id/itemFacebook"
+            />
+        <item
             android:icon="@drawable/icon_help"
             android:title="@string/help" />
 

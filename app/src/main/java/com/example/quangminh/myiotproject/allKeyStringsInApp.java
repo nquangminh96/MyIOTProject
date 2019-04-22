@@ -11,5 +11,6 @@ public class allKeyStringsInApp {
     public static final String TEMP = "Nhiệt Độ";
     public static final String HUMIDITY = "Độ Ẩm";
     public static final String TIMER = "Timer";
-
+    public static final String NOWTEMP = "Nhiệt độ hiện tại";
+    public static final String NOWHUMIDITY = "Độ ẩm hiện tại";
 }

@@ -136,22 +136,22 @@
             />
 
         <TextView
-            android:id="@+id/txtForgotPass"
+            android:id="@+id/txtForgottPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/size10dp"
             android:text="@string/forgot_password"
-            android:textColor="@color/colorTextHint" />
+            android:textColor="@color/colorWhite" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/txtSignUpAccount"
+        android:id="@+id/txtForgotPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/size10dp"
-        android:text="@string/sign_up_account"
+        android:text="@string/forgot_password"
         android:textColor="@color/colorTextHint" />
 </RelativeLayout>

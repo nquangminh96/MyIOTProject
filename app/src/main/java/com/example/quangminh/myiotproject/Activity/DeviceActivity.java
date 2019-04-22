@@ -104,11 +104,11 @@ public class DeviceActivity extends AppCompatActivity implements DatePickerDialo
         }
         checkValue();
 
-        myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.INFO).child(allKeyStringsInApp.TEMP).addValueEventListener(new ValueEventListener() {
+        myData.child(allKeyStringsInApp.LISTID).child(IDHome).child(nameRoom).child(allKeyStringsInApp.INFO).child(allKeyStringsInApp.TEMP).child(allKeyStringsInApp.NOWTEMP).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String temp = dataSnapshot.getValue().toString();
-                temp = temp + " " + (char) 0x00B0 + "C";
+                temp = temp + (char) 0x00B0 + "C";
                 txtNhietDo.setText(temp);
             }
 
